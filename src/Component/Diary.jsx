@@ -150,7 +150,7 @@ const Diary = () => {
 
           <div className="mt-4 flex items-center justify-between">
             <p className="text-2xl mb-4 font-semibold">
-              Recent Diary
+              My Diary
             </p>
           </div>
 
