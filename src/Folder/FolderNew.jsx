@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Folder, Plus, MoreVertical } from "lucide-react";
-import Navbar from "./Navbar";
+import Navbar from "../Component/Navbar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import SearchBar from "../Component/SearchBar";
 import {

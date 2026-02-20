@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../MainComponent/Navbar";
+import Navbar from "../Component/Navbar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {

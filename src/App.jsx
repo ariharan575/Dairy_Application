@@ -1,26 +1,26 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
-import Login from "./Component/Login";
-import Diary from "./Component/Diary";
+import Login from "./Authentication/Login";
+import Diary from "./Diary/Diary";
 import WriteDiary from "./Component/Write";
-import Calendar from "./Component/Calender";
+import Calendar from "./Calender/Calender";
 
-import Achieve from "./MainComponent/Achieve";
-import FolderNew from "./MainComponent/FolderNew";
-import Trash from "./MainComponent/Trash";
-import LoadingPage from "./MainComponent/LoadingPage";
-import Register from "./Component/Register";
+import Achieve from "./Diary/Achieve";
+import FolderNew from "./Folder/FolderNew";
+import Trash from "./Diary/Trash";
+import LoadingPage from "./HomePages/LoadingPage";
+import Register from "./Authentication/Register";
 
 import { AuthProvider } from "./auth/AuthContext";
 import RequireAuth from "./auth/PrivateRoute";
 import PublicRoute from "./auth/PublicRoute";
 
-import VerifyOtp from "./Component/VerifyOtp";
-import LandingContent from "./MainComponent/LandingContent";
-import ForgetPassword from "./Component/ForgetPassword";
-import ResetPassword from "./Component/ResetPassword";
-import FolderDiary from "./MainComponent/FolderDiary";
+import VerifyOtp from "./Authentication/VerifyOtp";
+import LandingContent from "./HomePages/LandingContent";
+import ForgetPassword from "./Authentication/ForgetPassword";
+import ResetPassword from "./Authentication/ResetPassword";
+import FolderDiary from "./Folder/FolderDiary";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -45,13 +45,13 @@ function AnimatedRoutes() {
         {/* ================= PRIVATE ROUTES ================= */}
         <Route element={<RequireAuth><LandingContent /></RequireAuth>} path="/home" />
         <Route element={<RequireAuth><Diary /></RequireAuth>} path="/diary" />
-        <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write_diary" />
-        <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write_diary/:diaryId" />
+        <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write-diary" />
+        <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write-diary/:diaryId" />
         <Route element={<RequireAuth><Calendar /></RequireAuth>} path="/calender" />
-        <Route element={<RequireAuth><Achieve /></RequireAuth>} path="/achieve" />
+        <Route element={<RequireAuth><Achieve /></RequireAuth>} path="/achieve-diary" />
         <Route element={<RequireAuth><FolderNew /></RequireAuth>} path="/folder" />
         <Route element={<RequireAuth><FolderDiary /></RequireAuth>} path="/folder/:id" />
-        <Route element={<RequireAuth><Trash /></RequireAuth>} path="/trash" />
+        <Route element={<RequireAuth><Trash /></RequireAuth>} path="/trash-diary" />
 
       </Routes>
     </AnimatePresence>

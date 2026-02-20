@@ -1,7 +1,7 @@
 import { ShieldCheck, Lock, PenLine } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { LockKeyhole } from "lucide-react";
-import Navbar from "./Navbar";
+import Navbar from "../Component/Navbar";
 
 export default function LoadingPage() {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../Component/Navbar";
 import { useAuth } from "../auth/AuthContext";
 import { fetchDiaries,
          formatDate,

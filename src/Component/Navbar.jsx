@@ -23,15 +23,15 @@ export default function Navbar() {
 
   const navData = [
     { id: 1, name: "Home", navigate: "/home", icon: <House size={16} /> },
-    { id: 2, name: "Write", navigate: "/write_diary", icon: <PencilSquare size={16} /> },
+    { id: 2, name: "Write", navigate: "/write-diary", icon: <PencilSquare size={16} /> },
     { id: 3, name: "Calender", navigate: "/calender", icon: <Calendar size={16} /> },
     { id: 4, name: "Diaries", navigate: "/diary", icon: <Book size={16} /> },
     { id: 5, name: "Folder", navigate: "/folder", icon: <Folder size={16} /> },
   ];
 
   const extraData = [
-    { id: 6, name: "Achieve", navigate: "/achieve", icon: <Archive size={16} /> },
-    { id: 7, name: "Trash", navigate: "/trash", icon: <Trash size={16} /> },
+    { id: 6, name: "Achieve", navigate: "/achieve-diary", icon: <Archive size={16} /> },
+    { id: 7, name: "Trash", navigate: "/trash-diary", icon: <Trash size={16} /> },
   ];
 
   // Close dropdown outside click

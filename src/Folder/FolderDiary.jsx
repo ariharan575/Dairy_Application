@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "../MainComponent/Navbar";
+import Navbar from "../Component/Navbar";
 import SearchBar from "../Component/SearchBar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { PenLine, Plus, MoreVertical } from "lucide-react";

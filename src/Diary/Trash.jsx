@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../MainComponent/Navbar";
+import Navbar from "../Component/Navbar";
 import SearchBar from "../Component/SearchBar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { MoreVertical, BookOpen } from "lucide-react";
@@ -11,10 +11,10 @@ import {
   permanantlyDelete,
   restoreDiaryApi,
   formatDate,
-  searchDiariesApi,   
+  searchDiariesApi,  
 } from "../api/diaryApi";
 
-const AchievedDiary = () => {
+const TrashDiary = () => {
   const navigate = useNavigate();
 
   const [diaries, setDiaries] = useState([]);
@@ -22,31 +22,32 @@ const AchievedDiary = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [deleteOpen, setDeleteOpen] = useState(false);
+
   const selectedDiaryRef = useRef(null);
 
   const colors = [
-    "from-pink-400 to-purple-500",
-    "from-blue-400 to-indigo-500",
-    "from-emerald-400 to-teal-500",
-    "from-orange-400 to-red-500",
     "from-cyan-400 to-blue-500",
+    "from-emerald-400 to-teal-500",
+    "from-blue-400 to-indigo-500",
+    "from-orange-400 to-red-500",
+    "from-pink-400 to-purple-500",
   ];
 
-  /* ---------------- LOAD ACHIEVED ---------------- */
+  /* ---------------- LOAD TRASH ---------------- */
 
   useEffect(() => {
-    loadAchieved();
+    loadTrash();
   }, []);
 
-  const loadAchieved = async () => {
+  const loadTrash = async () => {
     try {
       setLoading(true);
-      const res = await fetchDiaries("ACHIEVED");
+      const res = await fetchDiaries("TRASH");
       setDiaries(res.data || []);
       setError(null);
     } catch (err) {
       setDiaries([]);
-      setError(err.response?.data?.message || "No achieved diaries found");
+      setError(err.response?.data?.message || "No trash diaries found");
     } finally {
       setLoading(false);
     }
@@ -54,35 +55,32 @@ const AchievedDiary = () => {
 
   /* ---------------- BACKEND SEARCH ---------------- */
 
-const handleSearch = async (value) => {
-  setSearch(value);
+  const handleSearch = async (value) => {
+    setSearch(value);
 
-  if (!value.trim()) {
-    loadAchieved();
-    return;
-  }
+    if (!value.trim()) {
+      loadTrash();
+      return;
+    }
 
-  try {
-    setLoading(true);
-
-    const res = await searchDiariesApi(value, "ACHIEVED");
-
-    setDiaries(res.data.content || []);
-    setError(null);
-  } catch (err) {
-    setDiaries([]);
-    setError(err.response?.data?.message || "No achieved diary found");
-  } finally {
-    setLoading(false);
-  }
-};
-
+    try {
+      setLoading(true);
+      const res = await searchDiariesApi(value, "TRASH");
+      setDiaries(res.data.content || []);
+      setError(null);
+    } catch (err) {
+      setDiaries([]);
+      setError(err.response?.data?.message || "No diary found in trash");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /* ---------------- OPEN ---------------- */
 
   const openDiary = (id) => {
     navigate(`/write_diary/${id}`, {
-      state: { status: "ACHIEVED" },
+      state: { status: "TRASH" },
     });
   };
 
@@ -92,13 +90,13 @@ const handleSearch = async (value) => {
     setDiaries((prev) => prev.filter((d) => d.id !== diary.id));
 
     try {
-      await restoreDiaryApi(diary.id, "ACHIEVED");
+      await restoreDiaryApi(diary.id, "TRASH");
     } catch {
-      loadAchieved();
+      loadTrash();
     }
   };
 
-  /* ---------------- DELETE ---------------- */
+  /* ---------------- PERMANENT DELETE ---------------- */
 
   const confirmDelete = async () => {
     const diary = selectedDiaryRef.current;
@@ -111,7 +109,7 @@ const handleSearch = async (value) => {
     try {
       await permanantlyDelete(diary.id);
     } catch {
-      loadAchieved();
+      loadTrash();
     }
   };
 
@@ -119,35 +117,39 @@ const handleSearch = async (value) => {
 
   return (
     <PageWrapper>
-      <div className="bg-slate-100 h-[100vh]">
+      <div className=" bg-slate-100 h-[100vh]">
         <Navbar />
 
         <main className="mx-auto max-w-7xl px-3 px-md-6 py-10">
-          {/* ✅ FIXED SEARCHBAR CONNECTION */}
+          {/* ✅ Correct SearchBar usage */}
           <SearchBar value={search} onChange={handleSearch} />
 
-          <h2 className="text-3xl font-semibold text-[#008080] my-4 ps-2">
-            Achieved Diaries
+          <h2 className="text-3xl font-semibold text-[#008080] my-4">
+            Trashed Diaries
           </h2>
 
+          {/* -------- LOADING -------- */}
           {loading && (
             <p className="text-center text-slate-500 mt-10">
-              Loading ...
+              Loading...
             </p>
           )}
 
-          {error && !loading && (
-            <p className="text-center mt-5 text-red-500 font-semibold">
+          {/* -------- ERROR -------- */}
+          {!loading && error && (
+            <p className="text-center mt-6 text-red-500 font-semibold">
               {error}
             </p>
           )}
 
+          {/* -------- EMPTY -------- */}
           {!loading && diaries.length === 0 && !error && (
-            <div className="text-center mt-10 text-gray-500">
-              No Achieved Diaries Found
+            <div className="text-center mt-16 text-gray-500 text-lg">
+              No Diaries Found
             </div>
           )}
 
+          {/* -------- GRID -------- */}
           {!loading && diaries.length > 0 && (
             <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
               {diaries.map((card, index) => {
@@ -156,7 +158,7 @@ const handleSearch = async (value) => {
                 return (
                   <div
                     key={card.id}
-                    className="relative rounded-2xl p-4 p-md-4.5 bg-white min-h-[210px] max-h-[225px] shadow-md hover:shadow-xl transition"
+                    className="relative rounded-2xl p-4 p-md-5 min-h-[210px] max-h-[225px] bg-white shadow-md hover:shadow-xl transition"
                   >
                     <div
                       className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradient} opacity-10`}
@@ -165,7 +167,10 @@ const handleSearch = async (value) => {
                     {/* HEADER */}
                     <div className="flex justify-between items-center relative">
                       <div className="flex items-center gap-2">
-                        <BookOpen className="text-purple-500 mt-0" size={21} />
+                        <BookOpen className="text-purple-500" size={18} />
+                        <p className="text-sm text-gray-500">
+                          {formatDate(card.createdAt)}
+                        </p>
                       </div>
 
                       <Popover className="relative">
@@ -215,7 +220,7 @@ const handleSearch = async (value) => {
                     </div>
 
                     {/* CONTENT */}
-                    <p className="text-lg h5 font-semibold relative">
+                    <p className="text-lg h6 font-semibold relative">
                       {card.title}
                     </p>
 
@@ -230,7 +235,7 @@ const handleSearch = async (value) => {
         </main>
       </div>
 
-      {/* DELETE MODAL */}
+      {/* -------- DELETE MODAL -------- */}
       <Dialog open={deleteOpen} onClose={setDeleteOpen} className="relative z-50">
         <div className="fixed inset-0 bg-black/40" />
         <div className="fixed inset-0 flex items-center justify-center">
@@ -259,4 +264,4 @@ const handleSearch = async (value) => {
   );
 };
 
-export default AchievedDiary;
+export default TrashDiary;

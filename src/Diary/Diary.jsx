@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import SearchBar from "./SearchBar";
-import Navbar from "../MainComponent/Navbar";
+import SearchBar from "../Component/SearchBar";
+import Navbar from "../Component/Navbar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Folder, Plus, PenLine, MoreVertical } from "lucide-react";
+import { Plus, PenLine, MoreVertical } from "lucide-react";
 import { Popover, Dialog } from "@headlessui/react";
 import {truncateText} from "../utils/truncateText"
 import useResponsiveLimit from "../utils/truncateText"
