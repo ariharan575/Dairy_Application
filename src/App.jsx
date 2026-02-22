@@ -21,6 +21,7 @@ import LandingPage from "./HomePages/LandingPage";
 import ForgetPassword from "./Authentication/ForgetPassword";
 import ResetPassword from "./Authentication/ResetPassword";
 import FolderDiary from "./Folder/FolderDiary";
+import NotFound from "./Component/NotFound";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./App.css";
@@ -52,6 +53,8 @@ function AnimatedRoutes() {
         <Route element={<RequireAuth><FolderPage /></RequireAuth>} path="/folder" />
         <Route element={<RequireAuth><FolderDiary /></RequireAuth>} path="/folder/:id" />
         <Route element={<RequireAuth><Trash /></RequireAuth>} path="/trash-diary" />
+
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
     </AnimatePresence>
