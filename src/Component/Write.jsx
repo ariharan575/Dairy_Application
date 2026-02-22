@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Component/Navbar";
+import Navbar from "./Navbar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+ showSuccess,showError,showConfirm
+} from "../Animation/aleart"
 import {
   createDiaryApi,
   createDiaryInFolderApi,
@@ -40,15 +43,24 @@ const loadDiary = async () => {
 
   const saveDiary = async () => {
     if (!title || !content) {
-      alert("Title and content required");
+      showError("Title and content required");
       return;
     }
 
     setLoading(true);
+
     try {
+
+        if (isEdit) {
+          const confirmed = await showConfirm("Are you sure you want to update this diary?");
+    
+           if (!confirmed) return; 
+        } 
+        
       if (isEdit) {
         await updateDiaryApi(diaryId, { title, content });
-        alert("Diary Updated");
+         showSuccess("Diary Updated successfully!");
+
       } else {
         if (folderId && folderName) {
           //  FOLDER DIARY
@@ -62,15 +74,15 @@ const loadDiary = async () => {
           //  NORMAL DIARY
           await createDiaryApi({ title, content });
         }
-        alert("Diary saved successfully");
+         showSuccess("Diary saved successfully!");
       }
 
       setTitle("");
       setContent("");
       navigate(-1);
     } catch (err) {
-      console.error(err);
-      alert(err.message);
+    
+      showError(err.message);
     } finally {
       setLoading(false);
     }
@@ -121,7 +133,7 @@ const loadDiary = async () => {
                 placeholder="Add a title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className=" bg-transparent text-3xl h5 font-semibold outline-none"
+                className=" bg-white text-3xl h5 font-semibold outline-none"
               />
 
               <textarea

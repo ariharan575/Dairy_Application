@@ -104,7 +104,7 @@ const Diary = () => {
   };
 
   const openDiary = (id) => {
-  navigate(`/write_diary/${id}`, {
+  navigate(`/write-diary/${id}`, {
     state: { status: "ACTIVE" }
   });
 };
@@ -143,7 +143,7 @@ const Diary = () => {
       <div className="bg-slate-100">
         <Navbar />
 
-        <main className="mx-auto max-w-7xl px-3 py-10">
+        <main className="mx-auto max-w-7xl px-3 py-10 h-[100vh]">
           <SearchBar value={search} onChange={handleSearch} />
 
           {/* ---------------- HEADER ---------------- */}
@@ -168,7 +168,7 @@ const Diary = () => {
             </button>
 
             <button
-              onClick={() => navigate("/write_diary")}
+              onClick={() => navigate("/write-diary")}
               className="ms-auto flex items-center gap-1 rounded-full bg-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg"
             >
               <Plus className="h-4 w-4" />
@@ -189,7 +189,7 @@ const Diary = () => {
                         )}
                 <button
                   className="px-4 py-2 bg-cyan-500 text-white rounded"
-                  onClick={() => navigate("/write_diary")}
+                  onClick={() => navigate("/write-diary")}
                 >
                   Write Your First Diary
                 </button>

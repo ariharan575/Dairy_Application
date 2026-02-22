@@ -79,7 +79,7 @@ const TrashDiary = () => {
   /* ---------------- OPEN ---------------- */
 
   const openDiary = (id) => {
-    navigate(`/write_diary/${id}`, {
+    navigate(`/write-diary/${id}`, {
       state: { status: "TRASH" },
     });
   };

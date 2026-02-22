@@ -73,7 +73,7 @@ const FolderDiary = () => {
   /* ---------------- ACTIONS ---------------- */
 
   const openDiary = (diaryId) => {
-    navigate(`/write_diary/${diaryId}`, {
+    navigate(`/write-diary/${diaryId}`, {
       state: { status: "ACTIVE" },
     });
   };
@@ -126,7 +126,7 @@ const FolderDiary = () => {
 
             <button
               onClick={() =>
-                navigate("/write_diary", {
+                navigate("/write-diary", {
                   state: { folderId: id, folderName },
                 })
               }
@@ -151,7 +151,7 @@ const FolderDiary = () => {
 
               <button
                 onClick={() =>
-                  navigate("/write_diary", {
+                  navigate("/write-diary", {
                     state: { folderId: id, folderName },
                   })
                 }

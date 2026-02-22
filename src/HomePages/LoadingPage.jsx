@@ -48,7 +48,7 @@ export default function LoadingPage() {
 
 
         {/* Trust Section */}
-        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
           <TrustCard
             icon={<Lock className="text-indigo-600" />}
             title="Encrypted by Default"

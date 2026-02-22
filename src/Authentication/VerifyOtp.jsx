@@ -70,7 +70,7 @@ export default function VerifyOtp() {
                   <div className="form-group">
             <input
               type="number"
-              className="form-control rounded-pill py-2 px-4 bg-gray-200 shadow-inner border-2"
+              className="form-control rounded-pill py-3 px-4 bg-gray-200 shadow-inner border-2"
               value={otp}
               placeholder="otp-code"
               onChange={(e)=> setOtp(e.target.value)  }

@@ -76,7 +76,6 @@ export default function Navbar() {
             {/* Custom Dropdown */}
             <div className="relative flex items-center gap-1 cursor-pointer hover:underline decoration-2" ref={dropdownRef}>
               <div onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-1">
-                <ThreeDots size={18} />
                 <h6 className="m-0">More</h6>
               </div>
 

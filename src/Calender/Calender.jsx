@@ -18,6 +18,7 @@ import {
   searchDiariesApi
 } from "../api/diaryApi";
 
+
 export default function Calendar() {
   
   const navigate = useNavigate();
@@ -28,6 +29,8 @@ export default function Calendar() {
   const [loading, setLoading] = useState(true);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedDiary, setSelectedDiary] = useState(null);
+
+  
 
   const limit = useResponsiveLimit(12,18,20)
 
@@ -146,7 +149,7 @@ const confirmDelete = async () => {
 
       <Navbar />
 
-      <main className="min-h-screen bg-slate-100 px-2 px-md-5 mx-auto py-4">
+      <main className="min-h-screen bg-slate-100 px-2.5 px-md-5 mx-auto py-4">
         <div className="mb-4">
                     <SearchBar
                       value={search}       

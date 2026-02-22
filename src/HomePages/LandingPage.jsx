@@ -72,7 +72,7 @@ export default function LandingPage() {
   return (
     <>
     <Navbar/>
-    <div className="bg-md-slate-200 px-md-3 py-md-3 px-4 ">
+    <div className="bg-md-slate-200 px-md-3 py-md-3 px-4 h-[100vh]">
       <div className="mx-auto max-w-7xl space-y-10">
 
         {/* HERO SECTION */}
@@ -88,7 +88,7 @@ export default function LandingPage() {
           <div className="mt-6 flex justify-center gap-4">
             <button
               onClick={() => navigate("/write-diary")}
-              className="rounded-md bg-cyan-500 p-1.5 md:px-6 py-md-2 text-sm font-semibold text-white shadow hover:bg-cyan-600 transition"
+              className="rounded-md bg-cyan-500 p-2 md:px-6 py-md-2 text-sm font-semibold text-white shadow hover:bg-cyan-600 transition"
             >
               Write Diary
             </button>
@@ -150,7 +150,7 @@ export default function LandingPage() {
             <div className='text-center mt-5 min-vh-100'>
               <h2 className=' text-3xl fw-bold text-[#008080]'>No diary entries yet</h2> 
             <button type="submit" className="px-4 m-auto text-white p-2.5 font-semibold rounded-1
-              my-4 bg-cyan-500 shadow-md hover:bg-cyan-700 transition" onClick={()=> navigate("/write_diary")}>
+              my-4 bg-cyan-500 shadow-md hover:bg-cyan-700 transition" onClick={()=> navigate("/write-diary")}>
                 Write Your First Diary
             </button>
             </div>
@@ -195,11 +195,10 @@ function DiaryCard({ item,index,loadDiaries}) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedDiary, setSelectedDiary] = useState(null);
   
-  // 🔁 Rotate colors linearly
   const color = colors[index % colors.length];
 
   const openDiary = (id) => {
-    navigate(`/write_diary/${id}`);
+    navigate(`/write-diary/${id}`);
   };
   
     const achieveDiary = async (id) => {
