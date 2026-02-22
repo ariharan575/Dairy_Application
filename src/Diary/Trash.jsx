@@ -121,7 +121,7 @@ const TrashDiary = () => {
         <Navbar />
 
         <main className="mx-auto max-w-7xl px-3 px-md-6 py-10">
-          {/* ✅ Correct SearchBar usage */}
+          
           <SearchBar value={search} onChange={handleSearch} />
 
           <h2 className="text-3xl font-semibold text-[#008080] my-4">

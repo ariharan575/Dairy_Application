@@ -10,7 +10,7 @@ export default function Login() {
   const [isLogin,setIsLogin] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(""); // ✅ FIX: consistent naming
+  const [message, setMessage] = useState(""); 
 
   const [form, setForm] = useState({
     username: "",
@@ -65,7 +65,7 @@ export default function Login() {
           <form
             className="space-y-4"
             onSubmit={handleSubmit}
-            autoComplete="off"   // ✅ FIX: stop browser popup
+            autoComplete="off"   
           >
 
             <div className="form-group">
@@ -74,8 +74,8 @@ export default function Login() {
                 className="form-control rounded-pill py-2 px-4 bg-gray-200 shadow-inner border-2"
                 placeholder="Email"
                 autoFocus
-                autoComplete="username"   // ✅ FIX
-                value={form.email}        // ✅ FIX: controlled input
+                autoComplete="username"   
+                value={form.email}        
                 onChange={(e) =>
                   setForm({ ...form, email: e.target.value })
                 }
@@ -88,8 +88,8 @@ export default function Login() {
                 type="password"
                 className="form-control rounded-pill py-2 px-4 bg-gray-200 shadow-inner border-2"
                 placeholder="Password"
-                autoComplete="new-password"  // ✅ FIX
-                value={form.password}        // ✅ FIX
+                autoComplete="new-password"  
+                value={form.password}       
                 onChange={(e) =>
                   setForm({ ...form, password: e.target.value })
                 }

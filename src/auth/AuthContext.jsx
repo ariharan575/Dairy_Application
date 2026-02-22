@@ -5,10 +5,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-  // ✅ ADDED — authentication state (WHY: needed to control route + persistence)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // ✅ ADDED — loading state (WHY: avoid flicker during refresh check)
   const [loading, setLoading] = useState(true);
 
 
@@ -37,7 +35,6 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.setItem("accessToken", res.data.accessToken);
 
-    // ✅ ADDED (WHY: mark user as logged in immediately)
     setIsAuthenticated(true);
 
     await fetchProfile();
@@ -64,23 +61,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ====================================================
 
-  // 🔥🔥🔥 AMAZON STYLE AUTO LOGIN FEATURE
-  // ====================================================
-  // ✅ ADDED FULL BLOCK (WHY: keep user logged in after browser close)
-  // ====================================================
   useEffect(() => {
     const checkAuth = async () => {
       const token = sessionStorage.getItem("accessToken");
 
-      // If access token exists → user authenticated
       if (token) {
         setIsAuthenticated(true);
         setLoading(false);
         return;
       }
 
-      // If no access token → try refresh token (HttpOnly cookie)
       try {
         const res = await api.post("/api/auth/refresh");
         localStorage.setItem("accessToken", res.data.accessToken);
@@ -94,6 +86,7 @@ export const AuthProvider = ({ children }) => {
 
     checkAuth();
   }, []);
+
   // ====================================================
 
 
@@ -106,8 +99,8 @@ export const AuthProvider = ({ children }) => {
         forgetPasswordApi,
         verifyOtpApi,
         resetPasswordApi,
-        isAuthenticated, // ✅ ADDED
-        loading           // ✅ ADDED
+        isAuthenticated, 
+        loading     
       }}
     >
       {children}

@@ -15,7 +15,7 @@ import {
 import CreateFolderModal from "./CreateFolderModal";
 import { Dialog } from "@headlessui/react";
 
-export default function FolderNew() {
+export default function Folder() {
   const navigate = useNavigate();
 
   const [folders, setFolders] = useState([]);
@@ -82,9 +82,9 @@ const handleSearch = async (text) => {
 
   try {
     const res = await searchFolder(text);
-    setFolders(res.data.content);   // because backend returns Page<>
+    setFolders(res.data.content);   
   } catch (err) {
-    setFolders([]); // if no result
+    setFolders([]); 
   }
 };
 
@@ -154,7 +154,6 @@ const handleSearch = async (text) => {
           </button>
         </div>
 
-            {/* 🔥 ACTIVE / ACHIEVED CATEGORY */}
         <div className="flex gap-4 mb-3.5 mt-5">
           <button
            onClick={() => setAchived(false)} 
@@ -200,6 +199,7 @@ const handleSearch = async (text) => {
         )}
 
         {/* ================= FOLDER GRID ================= */}
+        
         {!loading && folders.length > 0 && (
           <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {folders.map((folder, index) => {

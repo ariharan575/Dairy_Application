@@ -7,7 +7,7 @@ import WriteDiary from "./Component/Write";
 import Calendar from "./Calender/Calender";
 
 import Achieve from "./Diary/Achieve";
-import FolderNew from "./Folder/FolderNew";
+import Folder from "./Folder/Folder";
 import Trash from "./Diary/Trash";
 import LoadingPage from "./HomePages/LoadingPage";
 import Register from "./Authentication/Register";
@@ -17,7 +17,7 @@ import RequireAuth from "./auth/PrivateRoute";
 import PublicRoute from "./auth/PublicRoute";
 
 import VerifyOtp from "./Authentication/VerifyOtp";
-import LandingContent from "./HomePages/LandingContent";
+import LandingPage from "./HomePages/LandingPage";
 import ForgetPassword from "./Authentication/ForgetPassword";
 import ResetPassword from "./Authentication/ResetPassword";
 import FolderDiary from "./Folder/FolderDiary";
@@ -43,13 +43,13 @@ function AnimatedRoutes() {
         <Route element={<PublicRoute><ResetPassword /></PublicRoute>} path="/reset-password" />
 
         {/* ================= PRIVATE ROUTES ================= */}
-        <Route element={<RequireAuth><LandingContent /></RequireAuth>} path="/home" />
+        <Route element={<RequireAuth><LandingPage /></RequireAuth>} path="/home" />
         <Route element={<RequireAuth><Diary /></RequireAuth>} path="/diary" />
         <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write-diary" />
         <Route element={<RequireAuth><WriteDiary /></RequireAuth>} path="/write-diary/:diaryId" />
         <Route element={<RequireAuth><Calendar /></RequireAuth>} path="/calender" />
         <Route element={<RequireAuth><Achieve /></RequireAuth>} path="/achieve-diary" />
-        <Route element={<RequireAuth><FolderNew /></RequireAuth>} path="/folder" />
+        <Route element={<RequireAuth><Folder /></RequireAuth>} path="/folder" />
         <Route element={<RequireAuth><FolderDiary /></RequireAuth>} path="/folder/:id" />
         <Route element={<RequireAuth><Trash /></RequireAuth>} path="/trash-diary" />
 

@@ -51,7 +51,7 @@ const loadDiary = async () => {
         alert("Diary Updated");
       } else {
         if (folderId && folderName) {
-          // ✅ FOLDER DIARY
+          //  FOLDER DIARY
           await createDiaryInFolderApi({
             title,
             content,
@@ -59,7 +59,7 @@ const loadDiary = async () => {
             folderName,
           });
         } else {
-          // ✅ NORMAL DIARY
+          //  NORMAL DIARY
           await createDiaryApi({ title, content });
         }
         alert("Diary saved successfully");

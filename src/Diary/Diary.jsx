@@ -209,7 +209,7 @@ const Diary = () => {
                     key={card.id}
                     onClick={() => openDiary(card.id)}
 
-                    // 🔥 UI CHANGE: soft gradient background
+                    
                     style={{ background: bg }}
 
                     className="relative cursor-pointer rounded-2xl min-h-[210px] max-h-[225px] p-4

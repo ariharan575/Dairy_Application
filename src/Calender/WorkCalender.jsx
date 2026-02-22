@@ -31,7 +31,7 @@ export default function WorkCalendar({ onDateSelect }) {
 
     console.log("Clicked date:", formattedDate);
 
-    onDateSelect(formattedDate); // 🔥 SEND DATE TO PARENT
+    onDateSelect(formattedDate); 
   };
 
     const isToday = (day) => {
@@ -86,7 +86,7 @@ export default function WorkCalendar({ onDateSelect }) {
               onClick={() => handleClick(day)}
               className={`h-10 flex items-center fw-semibold justify-center rounded-pill cursor-pointer
                 ${isToday(day)
-                  ? "bg-cyan-500 text-white font-bold "   // 🔴 TODAY COLOR
+                  ? "bg-cyan-500 text-white font-bold "   
                   : "hover:bg-gray-200"
                 }`}
             >

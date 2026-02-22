@@ -111,13 +111,13 @@ const loadDiaries = async () => {
   };
   
 const achieveDiary = async (id) => {
-  // ✅ OPTIMISTIC REMOVE
+
   setDiaries((prev) => prev.filter((d) => d.id !== id));
 
   try {
     await achieveDiaryApi(id);
   } catch (err) {
-    // rollback if API fails
+
     loadDiaries();
   }
 };
@@ -126,7 +126,6 @@ const confirmDelete = async () => {
   const diary = selectedDiaryRef.current;
   if (!diary) return;
 
-  // ✅ OPTIMISTIC REMOVE
   setDiaries((prev) => prev.filter((d) => d.id !== diary.id));
 
   setDeleteOpen(false);
@@ -135,7 +134,7 @@ const confirmDelete = async () => {
   try {
     await deleteDiaryApi(diary.id);
   } catch (err) {
-    // rollback if API fails
+    
     loadDiaries();
   }
 };

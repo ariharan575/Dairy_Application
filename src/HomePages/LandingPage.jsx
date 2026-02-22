@@ -14,7 +14,7 @@ import { MoreVertical } from "lucide-react";
 import {truncateText} from "../utils/truncateText"
 import useResponsiveLimit from "../utils/truncateText"
 
-export default function LandingContent() {
+export default function LandingPage() {
 
   const {logout} = useAuth();
   const firstName = localStorage.getItem("firstName");
@@ -87,7 +87,7 @@ export default function LandingContent() {
 
           <div className="mt-6 flex justify-center gap-4">
             <button
-              onClick={() => navigate("/write_diary")}
+              onClick={() => navigate("/write-diary")}
               className="rounded-md bg-cyan-500 p-1.5 md:px-6 py-md-2 text-sm font-semibold text-white shadow hover:bg-cyan-600 transition"
             >
               Write Diary

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://diaryapplication-backend-production-7a12.up.railway.app",
   withCredentials: true,
 });
 
@@ -24,7 +24,7 @@ const token = localStorage.getItem("accessToken");
 
       try {
         const res = await axios.post(
-          "http://localhost:8080/api/auth/refresh",
+          "http://diaryapplication-backend-production-7a12.up.railway.app/api/auth/refresh",
           {},
           { withCredentials: true }
         );
