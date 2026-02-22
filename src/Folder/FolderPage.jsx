@@ -15,7 +15,8 @@ import {
 import CreateFolderModal from "./CreateFolderModal";
 import { Dialog } from "@headlessui/react";
 
-export default function Folder() {
+export default function FolderPage() {
+  
   const navigate = useNavigate();
 
   const [folders, setFolders] = useState([]);
@@ -329,3 +330,4 @@ const handleSearch = async (text) => {
     </PageWrapper>
   );
 }
+ 
