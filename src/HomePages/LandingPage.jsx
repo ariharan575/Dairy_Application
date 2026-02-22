@@ -149,7 +149,9 @@ export default function LandingPage() {
                      cursor-pointer hover:underline decoration-1.5 " onClick={()=>navigate("/diary")}>View All</button>
           </div> 
 
-            { loading && <Loader/>}
+            { loading && (
+               <Loader/>
+               ) }
             {  error &&  
             <div className='text-center mt-5 min-vh-100'>
               <h2 className=' text-3xl fw-bold text-[#008080]'>No diary entries yet</h2> 

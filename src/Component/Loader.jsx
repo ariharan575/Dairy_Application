@@ -1,6 +1,6 @@
 function Loader() {
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center">
       <div 
         className="spinner-border text-secondary" 
         role="status" 

@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import api from "./axios";
 
 /* CREATE FOLDER */
@@ -22,3 +23,4 @@ export const deleteFolder = (id) =>
 /* ARCHIVE FOLDER */
 export const archiveFolder = (id) =>
   api.delete(`/folder/achieve/${id}`);
+

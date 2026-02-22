@@ -233,10 +233,9 @@ const confirmDelete = async () => {
             "
           >
             {loading && (
-              <>
+            <>
               <Loader/>
             </>
-
             )}
           {!loading && filteredDiaries.length === 0 && (
               <div className="text-center mt-5">
