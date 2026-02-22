@@ -13,6 +13,7 @@ import { Popover, Dialog } from "@headlessui/react";
 import { MoreVertical } from "lucide-react";
 import {truncateText} from "../utils/truncateText"
 import useResponsiveLimit from "../utils/truncateText"
+import Loader from "../Component/Loader";
 
 export default function LandingPage() {
 
@@ -88,14 +89,16 @@ export default function LandingPage() {
           <div className="mt-6 flex justify-center gap-4">
             <button
               onClick={() => navigate("/write-diary")}
-              className="rounded-md bg-cyan-500 p-2 md:px-6 py-md-2 text-sm font-semibold text-white shadow hover:bg-cyan-600 transition"
+              className="rounded-md bg-cyan-500 p-2.5 px-md-6 py-md-2 text-sm 
+                      font-semibold text-white shadow hover:bg-cyan-600 transition"
             >
               Write Diary
             </button>
 
             <button
               onClick={logout}
-              className="rounded-md border border-gray-300 px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 transition"
+              className="rounded-md border border-gray-300 px-6 py-2 text-sm 
+              font-semibold text-gray-700 hover:bg-gray-100 transition"
             >
               Sign up
             </button>
@@ -142,10 +145,11 @@ export default function LandingPage() {
 
                  <button className="text-cyan-600 d-none d-md-block font-medium cursor-pointer
                       hover:underline decoration-1.5" onClick={() => filterDiaries("MONTH")}>This Month</button>
-            <button className="text-cyan-600 font-medium ms-auto text-sm me-2 me-lg-5 cursor-pointer hover:underline decoration-1.5 " onClick={()=>navigate("/diary")}>View All</button>
-       </div> 
+                 <button className="text-cyan-600 font-medium ms-auto text-sm me-2 me-lg-5
+                     cursor-pointer hover:underline decoration-1.5 " onClick={()=>navigate("/diary")}>View All</button>
+          </div> 
 
-            { loading && <p>Loading...</p>}
+            { loading && <Loader/>}
             {  error &&  
             <div className='text-center mt-5 min-vh-100'>
               <h2 className=' text-3xl fw-bold text-[#008080]'>No diary entries yet</h2> 
@@ -213,7 +217,7 @@ function DiaryCard({ item,index,loadDiaries}) {
     };
 
   return (
-    <div className="relative rounded-xl bg-gray-100 p-6 shadow-sm transition min-h-[170px] max-h-[170px] 
+    <div className="relative rounded-xl bg-gray-100 p-6 shadow-sm transition min-h-[200px] 
              hover:-translate-y-1 hover:shadow-lg hover:shadow-md" 
               onClick={(e) => {e.stopPropagation() ;
                    openDiary(item.id)}}>
@@ -238,8 +242,6 @@ function DiaryCard({ item,index,loadDiaries}) {
        </p>
        <MoreVertical size={18} />
      </Popover.Button>
-
-      
 
       <Popover.Panel className="absolute right-0 z-50 mt-2 w-32 bg-white rounded shadow border">
         <button
@@ -276,7 +278,6 @@ function DiaryCard({ item,index,loadDiaries}) {
     </Popover>
   </div>
 </div>
-
 
       <p className="text-sm text-[#6b7280] break-words line-clamp-3">
         {item.content}

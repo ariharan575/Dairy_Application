@@ -17,6 +17,7 @@ import {
   achieveDiaryApi,
   searchDiariesApi
 } from "../api/diaryApi";
+import Loader from "../Component/Loader";
 
 
 export default function Calendar() {
@@ -30,7 +31,33 @@ export default function Calendar() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedDiary, setSelectedDiary] = useState(null);
 
-  
+
+    const [dateTime, setDateTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+    const hour = dateTime.getHours();
+
+  const isNight = hour >= 19 || hour < 6;
+
+  const formattedDate = dateTime.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    year: "numeric",
+  });
+
+  const formattedTime = dateTime.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
 
   const limit = useResponsiveLimit(12,18,20)
 
@@ -69,13 +96,13 @@ const loadDiaries = async () => {
 
     const res = await fetchDiaries("ACTIVE");
 
-    // ✅ EMPTY IS VALID
+ 
     setDiaries(res.data || []);
     if(diaries.length === 0){
       setError("No more diary Exists");
     }
   } catch (err) {
-    // ✅ If backend says "not found", treat as empty list
+
     if (err.response?.status === 404) {
       setDiaries([]);
       setError(null);
@@ -110,7 +137,7 @@ const loadDiaries = async () => {
   };
 
   const openDiary = (id) => {
-    navigate(`/write_diary/${id}`);
+    navigate(`/write-diary/${id}`);
   };
   
 const achieveDiary = async (id) => {
@@ -172,10 +199,14 @@ const confirmDelete = async () => {
           >
              {/* DATE INFO */}
             <div className="hidden md:flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm mb-4">
-              <i className="bi bi-brightness-high-fill text-warning fs-4"></i>
+             {isNight ? (
+             <i className="bi bi-moon-fill" style={{ fontSize: "40px", color: "gray" }}></i>
+              ) : (
+               <i className="bi bi-brightness-high-fill text-warning fs-4"></i>
+               )}
               <div>
-                <p className="text-sm font-semibold text-slate-800">12:10 AM</p>
-                <p className="text-xs text-slate-500">Tuesday, Dec 2026</p>
+                <p className="text-sm font-semibold text-slate-800">{formattedTime}</p>
+                <p className="text-xs text-slate-500">{formattedDate}</p>
               </div>
             </div>
 
@@ -202,9 +233,11 @@ const confirmDelete = async () => {
             "
           >
             {loading && (
-              <p className="text-center text-slate-500">Loading...</p>
-            )}
+              <>
+              <Loader/>
+            </>
 
+            )}
           {!loading && filteredDiaries.length === 0 && (
               <div className="text-center mt-5">
                        {error && !loading && (
@@ -268,8 +301,8 @@ const confirmDelete = async () => {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              selectedDiaryRef.current = item; // ✅ instant (no async)
-                              setSelectedDiary(item);          // keep your state
+                              selectedDiaryRef.current = item; 
+                              setSelectedDiary(item);          
                               setDeleteOpen(true);
                             }}
                             className="block w-full px-3 py-2 text-sm text-red-600 hover:bg-gray-100"

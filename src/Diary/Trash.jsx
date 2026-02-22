@@ -13,6 +13,7 @@ import {
   formatDate,
   searchDiariesApi,  
 } from "../api/diaryApi";
+import Loader from "../Component/Loader";
 
 const TrashDiary = () => {
   const navigate = useNavigate();
@@ -130,9 +131,7 @@ const TrashDiary = () => {
 
           {/* -------- LOADING -------- */}
           {loading && (
-            <p className="text-center text-slate-500 mt-10">
-              Loading...
-            </p>
+              <Loader/>
           )}
 
           {/* -------- ERROR -------- */}

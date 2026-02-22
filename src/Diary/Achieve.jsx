@@ -13,6 +13,7 @@ import {
   formatDate,
   searchDiariesApi,   
 } from "../api/diaryApi";
+import Loader from "../Component/Loader";
 
 const AchievedDiary = () => {
   const navigate = useNavigate();
@@ -131,9 +132,7 @@ const handleSearch = async (value) => {
           </h2>
 
           {loading && (
-            <p className="text-center text-slate-500 mt-10">
-              Loading ...
-            </p>
+              <Loader/>
           )}
 
           {error && !loading && (

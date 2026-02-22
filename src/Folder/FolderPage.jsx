@@ -14,6 +14,7 @@ import {
 } from "../api/folderApi";
 import CreateFolderModal from "./CreateFolderModal";
 import { Dialog } from "@headlessui/react";
+import Loader from "../Component/Loader";
 
 export default function FolderPage() {
   
@@ -141,7 +142,7 @@ const handleSearch = async (text) => {
             onChange={handleSearch}
 />
 
-        <div className="flex justify-between items-center my-6">
+        <div className="flex justify-between items-center px-2.5 px-md-5 my-6">
           <h2 className="text-3xl font-semibold text-[#008080]">
             My Folder
           </h2>
@@ -180,9 +181,7 @@ const handleSearch = async (text) => {
         </div>
 
         {loading && (
-          <p className="text-center text-slate-500 mt-10">
-            Loading ...
-          </p>
+          <Loader/>
         )}
 
         {!loading && folders.length === 0 && (

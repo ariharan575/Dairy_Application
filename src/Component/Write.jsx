@@ -16,8 +16,7 @@ export default function WriteDiary() {
   const location = useLocation();
   const navigate = useNavigate();
 
- const { diaryId } = useParams();
-
+    const { diaryId } = useParams();
 
   const folderId = location.state?.folderId || null;
   const folderName = location.state?.folderName || null;
@@ -50,13 +49,6 @@ const loadDiary = async () => {
     setLoading(true);
 
     try {
-
-        if (isEdit) {
-          const confirmed = await showConfirm("Are you sure you want to update this diary?");
-    
-           if (!confirmed) return; 
-        } 
-        
       if (isEdit) {
         await updateDiaryApi(diaryId, { title, content });
          showSuccess("Diary Updated successfully!");
@@ -133,7 +125,7 @@ const loadDiary = async () => {
                 placeholder="Add a title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className=" bg-white text-3xl h5 font-semibold outline-none"
+                className=" bg-white text-3xl h5 font-semibold p-1.5 outline-none"
               />
 
               <textarea

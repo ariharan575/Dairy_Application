@@ -12,6 +12,7 @@ import {
   formatDate,
 } from "../api/diaryApi";
 import api from "../api/axios";
+import Loader from "../Component/Loader";
 
 const FolderDiary = () => {
   const { id } = useParams(); // folderId
@@ -138,9 +139,7 @@ const FolderDiary = () => {
           </div>
 
           {loading && (
-            <div className="text-center mt-10 text-slate-500">
-              Loading ...
-            </div>
+            <Loader/>
           )}
 
           {!loading && filteredDiaries.length === 0 && (

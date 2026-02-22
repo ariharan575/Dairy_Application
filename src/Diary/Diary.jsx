@@ -17,6 +17,7 @@ import {
   fetchMonthDiaries,
   searchDiariesApi
 } from "../api/diaryApi";
+import Loader from "../Component/Loader";
 
 const Diary = () => {
   const navigate = useNavigate();
@@ -177,9 +178,7 @@ const Diary = () => {
           </div>
 
          {loading && (
-          <p className="text-center text-slate-500 mt-10">
-            Loading ...
-          </p>
+            <Loader/>
           )}
 
            { !loading && filteredDiaries.length === 0 && (

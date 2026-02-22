@@ -31,6 +31,7 @@ export default function LoadingPage() {
         {/* Action */}
         <div className="mt-8 flex justify-center gap-4">
           <button
+           onClick={()=> navigate("write-diary")}
             className="flex items-center gap-2 rounded-md bg-cyan-500 px-3 py-3 text-sm font-semibold text-white shadow"
           >
             <PenLine size={16} className=" d-none d-md-block" />
@@ -48,7 +49,7 @@ export default function LoadingPage() {
 
 
         {/* Trust Section */}
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-4 mx-3 md:grid-cols-3">
           <TrustCard
             icon={<Lock className="text-indigo-600" />}
             title="Encrypted by Default"
@@ -98,7 +99,7 @@ export default function LoadingPage() {
 
         {/* Action */}
         <button
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/write-diary")}
           className="mt-8 rounded-md bg-cyan-600 px-6 py-3 text-sm font-medium text-white hover:bg-cyan-700"
         >
           Create your first encrypted diary
