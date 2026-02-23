@@ -3,29 +3,44 @@ import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import SearchBar from "../Component/SearchBar";
 import { PageWrapper } from "../Animation/PageWrapper";
-import { PenLine, Plus, MoreVertical } from "lucide-react";
-import { Popover, Dialog } from "@headlessui/react";
+import { PenLine, Plus } from "lucide-react";
 import {
   fetchDiaryByFolder,
   permanantlyDelete,
   restoreFolderDiaryApi,
   formatDate,
+  achieveDiaryApi
 } from "../api/diaryApi";
+import {
+  fetchAchivedFolderById,
+  searchDiaryByFolder,
+} from "../api/folderApi";
 import api from "../api/axios";
 import Loader from "../Component/Loader";
+import ConfirmDialog from "../Component/ConfirmDialog";
+import { truncateText } from "../utils/truncateText";
+import DiaryActionsPopover from "../Component/DiaryActionsPopover";
+import useResponsiveLimit from "../utils/truncateText";
 
 const FolderDiary = () => {
-  const { id } = useParams(); // folderId
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [diaries, setDiaries] = useState([]);
   const [folderName, setFolderName] = useState("");
   const [search, setSearch] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
+  const [folderStatus, setFolderStatus] = useState({
+    id: "",
+    status: "ACTIVE", // default
+  });
+
   const selectedDiaryRef = useRef(null);
+
+  const limit = useResponsiveLimit(12, 18, 22);
 
   const colors = [
     "from-yellow-400 to-yellow-500",
@@ -34,31 +49,40 @@ const FolderDiary = () => {
     "from-teal-400 to-teal-500",
   ];
 
-  const icons = [PenLine];
-
-  /* ---------------- LOAD ---------------- */
-
+  /* ---------------- LOAD FOLDER ---------------- */
   useEffect(() => {
     loadFolder();
-    loadDiaries();
   }, [id]);
 
   const loadFolder = async () => {
     try {
       const res = await api.get(`/folder/fetch/${id}`);
+      setFolderStatus({ id: res.data.id, status: res.data.status });
       setFolderName(res.data.folderName);
     } catch {
-      setFolderName("Folder Diaries");
+      try {
+        const res = await fetchAchivedFolderById(id);
+        setFolderStatus({ id: res.data.id, status: res.data.status });
+        setFolderName(res.data.folderName);
+      } catch {
+        setFolderName("Folder Diaries");
+      }
     }
   };
+
+  /* ---------------- LOAD DIARIES ---------------- */
+  useEffect(() => {
+    if (!folderStatus.id) return;
+    loadDiaries();
+  }, [folderStatus]);
 
   const loadDiaries = async () => {
     try {
       setLoading(true);
-      const res = await fetchDiaryByFolder(id);
+      const res = await fetchDiaryByFolder(folderStatus.id);
       setDiaries(res.data.content || []);
+      setError(null);
     } catch {
-      setError("Failed to load diaries");
       setDiaries([]);
     } finally {
       setLoading(false);
@@ -66,18 +90,54 @@ const FolderDiary = () => {
   };
 
   /* ---------------- SEARCH ---------------- */
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (search && folderStatus.id) {
+        handleSearch(search);
+      } else if (!search) {
+        loadDiaries();
+      }
+    }, 300); // debounce 300ms
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+    return () => clearTimeout(delay);
+  }, [search]);
+
+  const handleSearch = async (value) => {
+    if (!folderStatus.id) return;
+
+    try {
+      setLoading(true);
+      const res = await searchDiaryByFolder(
+        folderStatus.id,
+        value,
+        folderStatus.status
+      );
+      setDiaries(res.data.content || []);
+      setError(null);
+    } catch (err) {
+      setDiaries([]);
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* ---------------- ACTIONS ---------------- */
-
   const openDiary = (diaryId) => {
     navigate(`/write-diary/${diaryId}`, {
-      state: { status: "ACTIVE" },
+      state: { status: folderStatus.status },
     });
   };
+
+    const hanldeAchieve = async (id) => {
+     setDiaries((prev) => prev.filter((d) => d.id !== id));
+  
+      try {
+        await achieveDiaryApi(id);
+      } catch {
+        loadDiaries();
+      }
+    };
 
   const confirmDelete = async () => {
     const diary = selectedDiaryRef.current;
@@ -86,8 +146,7 @@ const FolderDiary = () => {
     try {
       await permanantlyDelete(diary.id);
       setDiaries((prev) => prev.filter((d) => d.id !== diary.id));
-    } catch (err) {
-      console.error("Permanent delete failed", err);
+    } catch {
       loadDiaries();
     } finally {
       setDeleteOpen(false);
@@ -97,38 +156,27 @@ const FolderDiary = () => {
 
   const handleRestore = async (diary) => {
     try {
-      await restoreFolderDiaryApi(diary.id, id, "ACTIVE");
+      await restoreFolderDiaryApi(diary.id, folderStatus.id, folderStatus.status);
       setDiaries((prev) => prev.filter((d) => d.id !== diary.id));
-    } catch (err) {
-      console.error("Restore failed", err);
-    }
+    } catch {}
   };
 
-  /* ---------------- FILTER ---------------- */
-
-  const filteredDiaries = diaries.filter((d) =>
-    d.title?.toLowerCase().includes(search.toLowerCase())
-  );
-
   /* ---------------- UI ---------------- */
-
   return (
     <PageWrapper>
       <div className="min-h-screen bg-slate-100">
         <Navbar />
 
         <main className="mx-auto max-w-7xl px-6 py-10">
-          <SearchBar value={search} onChange={handleSearch} />
+          <SearchBar value={search} onChange={setSearch} />
 
           <div className="my-4 flex items-center justify-between">
-            <h2 className="text-3xl font-semibold text-[#008080]">
-              {folderName}
-            </h2>
+            <h2 className="text-3xl font-semibold text-[#008080]">{folderName}</h2>
 
             <button
               onClick={() =>
                 navigate("/write-diary", {
-                  state: { folderId: id, folderName },
+                  state: { folderId: folderStatus.id, folderName },
                 })
               }
               className="flex items-center gap-1 rounded-full bg-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg"
@@ -138,20 +186,15 @@ const FolderDiary = () => {
             </button>
           </div>
 
-          {loading && (
-            <Loader/>
-          )}
+          {loading && <Loader />}
 
-          {!loading && filteredDiaries.length === 0 && (
+          {!loading && diaries.length === 0 && (
             <div className="text-center mt-16">
-              <p className="text-red-500 fs-4 mb-4">
-                No diary exists in this folder
-              </p>
-
+              <p className="text-red-500 mb-4">No diary exists in this folder</p>
               <button
                 onClick={() =>
                   navigate("/write-diary", {
-                    state: { folderId: id, folderName },
+                    state: { folderId: folderStatus.id, folderName },
                   })
                 }
                 className="bg-cyan-500 text-white px-6 py-2 rounded"
@@ -161,10 +204,9 @@ const FolderDiary = () => {
             </div>
           )}
 
-          {!loading && filteredDiaries.length > 0 && (
+          {!loading && diaries.length > 0 && (
             <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
-              {filteredDiaries.map((card, index) => {
-                const Icon = icons[index % icons.length];
+              {diaries.map((card, index) => {
                 const gradient = colors[index % colors.length];
 
                 return (
@@ -175,64 +217,31 @@ const FolderDiary = () => {
                   >
                     <div
                       className={`absolute inset-0 m-1 bg-gradient-to-r ${gradient} opacity-20 rounded`}
-                    ></div>
+                    />
 
-                    <div className="flex justify-between items-center">
-                      <span className="bg-white p-2 rounded-xl shadow relative z-10">
-                        <Icon className="h-5 w-5 text-slate-700" />
+                    <div className="flex justify-between items-center relative z-10">
+                      <span className="bg-white p-2 rounded-xl shadow">
+                        <PenLine className="h-5 w-5 text-slate-700" />
                       </span>
 
-                      <Popover className="relative z-10">
-                        <Popover.Button
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-2 outline-none"
-                        >
-                          <p className="text-gray-500 text-sm">
-                            {formatDate(card.createdAt)}
-                          </p>
-                          <MoreVertical size={18} />
-                        </Popover.Button>
-
-                        <Popover.Panel className="absolute right-0 z-50 mt-2 w-32 bg-white rounded shadow border">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              openDiary(card.id);
-                            }}
-                            className="block w-full px-3 py-2 text-sm hover:bg-gray-100"
-                          >
-                            Open
-                          </button>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleRestore(card);
-                            }}
-                            className="block w-full px-3 py-2 text-sm hover:bg-gray-100"
-                          >
-                            Restore
-                          </button>
-
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              selectedDiaryRef.current = card;
-                              setDeleteOpen(true);
-                            }}
-                            className="block w-full px-3 py-2 text-sm text-red-600 hover:bg-gray-100"
-                          >
-                            Delete
-                          </button>
-                        </Popover.Panel>
-                      </Popover>
+                      <DiaryActionsPopover
+                        date={formatDate(card.createdAt)}
+                        type={folderStatus.status === "ACHIEVED" ? "ACHIEVED" : "ACTIVE"}
+                        onOpen={() => openDiary(card.id)}
+                        onArchive={()=>hanldeAchieve(card.id)}
+                        onRestore={() => handleRestore(card)}
+                        onDelete={() => {
+                          selectedDiaryRef.current = card;
+                          setDeleteOpen(true);
+                        }}
+                      />
                     </div>
 
-                    <h4 className="text-lg font-semibold mt-2 relative z-10">
-                      {card.title}
+                    <h4 className="text-lg font-semibold mt-3 text-slate-800">
+                      {truncateText(card.title, limit)}
                     </h4>
 
-                    <p className="text-sm text-slate-500 line-clamp-3 relative z-10">
+                    <p className="text-sm text-[#6b7280] break-words line-clamp-3">
                       {card.content}
                     </p>
                   </div>
@@ -243,33 +252,16 @@ const FolderDiary = () => {
         </main>
       </div>
 
-      {/* DELETE CONFIRM */}
-      <Dialog open={deleteOpen} onClose={setDeleteOpen} className="relative z-50">
-        <div className="fixed inset-0 bg-black/40" />
-
-        <div className="fixed inset-0 flex items-center justify-center">
-          <Dialog.Panel className="bg-white p-6 rounded-lg w-80">
-            <Dialog.Title className="font-semibold text-lg">
-              Delete Diary?
-            </Dialog.Title>
-
-            <p className="text-sm text-gray-500 mt-2">
-              This diary will be permanently deleted.
-            </p>
-
-            <div className="mt-4 flex justify-end gap-2">
-              <button onClick={() => setDeleteOpen(false)}>Cancel</button>
-
-              <button
-                onClick={confirmDelete}
-                className="bg-red-500 text-white px-4 py-1 rounded"
-              >
-                Delete
-              </button>
-            </div>
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+      {/* CENTRALIZED CONFIRM DIALOG */}
+      <ConfirmDialog
+        open={deleteOpen}
+        setOpen={setDeleteOpen}
+        title="Delete Diary?"
+        message="This diary will be permanently deleted."
+        confirmText="Delete"
+        confirmColor="bg-red-500"
+        onConfirm={confirmDelete}
+      />
     </PageWrapper>
   );
 };

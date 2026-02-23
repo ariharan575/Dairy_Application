@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
 export default function CreateFolderModal({ onClose, onSave }) {
+
   const [folderName, setFolderName] = useState("");
 
-  const handleSubmit = () => {
-    if (!folderName.trim()) return;
-    onSave(folderName);
-    setFolderName("");
-  };
+const handleSubmit = () => {
+  if (!folderName.trim()) return;
+  onSave(folderName); 
+  setFolderName("");
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">

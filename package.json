@@ -22,6 +22,7 @@
     "react-bootstrap-icons": "^1.11.6",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.11.0",
+    "react-window": "^2.2.7",
     "sweetalert2": "^11.26.20"
   },
   "devDependencies": {

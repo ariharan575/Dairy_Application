@@ -5,8 +5,8 @@ export const showSuccess = (message) => {
   Swal.fire({
     icon: "success",
     title: message,
-    timer: 1500,
-    showConfirmButton: false,
+    timer: 2000,
+    confirmButtonColor: "#0bc21d",
     background: "#f9fafb",
     color: "#111827"
   });
@@ -19,18 +19,4 @@ export const showError = (message) => {
     title: message,
     confirmButtonColor: "#dc2626"
   });
-};
-
-//  Confirm Delete Alert
-export const showConfirm = async (message) => {
-  const result = await Swal.fire({
-    icon: "warning",
-    title: message,
-    showCancelButton: true,
-    confirmButtonText: "Yes",
-    cancelButtonText: "Cancel",
-    confirmButtonColor: "#dc2626"
-  });
-
-  return result.isConfirmed;
 };

@@ -20,8 +20,6 @@ export default function VerifyOtp() {
     }
   }, [email, usage, navigate]);
 
-  console.log(email,otp,usage)
-
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -62,15 +60,15 @@ export default function VerifyOtp() {
                 Email Verification
           </h2>
           <p className="text-gray-500 text-sm my-3">
-            We just sent your authentication code via email to <br /> {email.charAt(0)} **********@gmail.com. The code will expire in 5 Minites
+            We just sent your authentication code via email to <br /> {email.charAt(0)} **********@gmail.com. The code will expire in 5 Minutes
           </p>
           <p>Device Verification Code</p>
         </div>
-         <form className="space-y-4" onSubmit={submit}>
+         <form className="space-y-4 " onSubmit={submit}>
                   <div className="form-group">
             <input
               type="number"
-              className="form-control rounded-pill py-3 px-4 bg-gray-200 shadow-inner border-2"
+              className="form-control my-3  rounded-pill py-2 px-4 bg-gray-200 shadow-inner border-2"
               value={otp}
               placeholder="otp-code"
               onChange={(e)=> setOtp(e.target.value)  }
@@ -79,7 +77,7 @@ export default function VerifyOtp() {
           <p className="text-danger">{message}</p>
           <button
             type="submit"
-            className="w-full py-2 rounded-pill text-white font-semibold bg-cyan-500 shadow-md hover:bg-cyan-600 transition"
+            className="w-full py-2 my-3 rounded-pill text-white font-semibold bg-cyan-500 shadow-md hover:bg-cyan-600 transition"
           >
             {loading ? "Verifying..." :  "Verifiy" }
           </button>

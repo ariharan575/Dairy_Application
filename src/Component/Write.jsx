@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import { PageWrapper } from "../Animation/PageWrapper";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
- showSuccess,showError,showConfirm
+ showSuccess,showError
 } from "../Animation/aleart"
 import {
   createDiaryApi,
@@ -33,6 +33,7 @@ export default function WriteDiary() {
   }, [diaryId]);
 
 const loadDiary = async () => {
+  
   const res = await fetchDiaryById(diaryId, status);
   setTitle(res.data.title);
   setContent(res.data.content);
@@ -125,7 +126,8 @@ const loadDiary = async () => {
                 placeholder="Add a title..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className=" bg-white text-3xl h5 font-semibold p-1.5 outline-none"
+                className="bg-[#f9fafc] text-3xl h5 rounded-2 font-semibold p-2 outline-none"
+                autoFocus
               />
 
               <textarea

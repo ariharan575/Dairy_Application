@@ -24,8 +24,6 @@ import FolderDiary from "./Folder/FolderDiary";
 import NotFound from "./Component/NotFound";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./App.css";
-
 /* ---------------- ANIMATED ROUTES ---------------- */
 
 function AnimatedRoutes() {

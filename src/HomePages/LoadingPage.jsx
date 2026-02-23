@@ -11,10 +11,10 @@ export default function LoadingPage() {
       <Navbar/>
     <div className="bg-slate-200 px-3 m-auto">
      
-      <div className="mx-auto max-w-4xl pt-2 text-center ">
+      <div className="mx-auto max-w-6xl pt-4 text-center ">
 
         {/* Icon */}
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-100 ">
+        <div className="mx-auto mb-6 flex h-25 w-16 items-center justify-center rounded-2xl bg-indigo-100 ">
           <ShieldCheck className="h-8 w-8 text-indigo-600 " />
         </div>
 
@@ -23,9 +23,9 @@ export default function LoadingPage() {
           Your Secure Diary
         </h1>
         
-        <p className="mx-auto mt-3 max-w-xl text-slate-600">
-          This is your private space. Every diary entry is protected with
-          enterprise-grade encryption. Only you can read it.
+        <p className="mx-auto mt-3 max-w-2xl text-slate-600">
+          This is your private space. to write, reflect, and relive your memories anytime, anywhere.
+           Every diary entry is protected with enterprise-grade encryption. Only you can read it.
         </p>
 
         {/* Action */}
@@ -49,7 +49,7 @@ export default function LoadingPage() {
 
 
         {/* Trust Section */}
-        <div className="mt-14 grid grid-cols-1 gap-4 mx-3 md:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-10  md:grid-cols-3">
           <TrustCard
             icon={<Lock className="text-indigo-600" />}
             title="Encrypted by Default"
@@ -90,7 +90,7 @@ export default function LoadingPage() {
         </p>
 
         {/* AES Info Box */}
-        <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-4 text-left">
+        <div className="mt-6 rounded-lg bg-slate-50 border border-slate-200 p-4 mb-3 text-left">
           <p className="text-sm text-slate-700">
             🔐 <strong>Encryption:</strong> Diary content is encrypted before
             being stored. Only you can decrypt and read it.
@@ -100,7 +100,7 @@ export default function LoadingPage() {
         {/* Action */}
         <button
           onClick={() => navigate("/write-diary")}
-          className="mt-8 rounded-md bg-cyan-600 px-6 py-3 text-sm font-medium text-white hover:bg-cyan-700"
+          className="mt-8 rounded-md bg-cyan-500 px-6 py-3 text-sm font-medium text-white hover:bg-cyan-600"
         >
           Create your first encrypted diary
         </button>
