@@ -31,7 +31,7 @@ export default function VerifyOtp() {
       // REGISTER FLOW
       if (usage === "REGISTER") {
         sessionStorage.setItem("accessToken", res.data.accessToken);
-        navigate("/home");
+        window.location.href = "/home";
       }
 
       // FORGET PASSWORD FLOW

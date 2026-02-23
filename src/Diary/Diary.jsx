@@ -148,10 +148,10 @@ const Diary = () => {
 
   return (
     <PageWrapper>
-      <div className="bg-slate-100">
+      <div className="bg-slate-100 h-[100vh]">
         <Navbar />
 
-        <main className="mx-auto max-w-7xl px-3 py-10 h-[100vh]">
+        <main className="mx-auto max-w-7xl px-3 py-10 h-[100vh] bg-slate-100">
           <SearchBar value={search} onChange={handleSearch} />
 
           <div className="mt-4 flex items-center justify-between">

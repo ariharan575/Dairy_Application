@@ -158,9 +158,10 @@ export default function Calendar() {
 
   return (
     <PageWrapper>
+      
       <Navbar />
 
-      <main className="min-h-screen bg-slate-100 px-2.5 px-md-5 mx-auto py-4">
+      <main className="bg-slate-100 h-[100vh] px-2.5 px-md-5 mx-auto py-4">
         <div className="mb-4">
           <SearchBar value={search} onChange={handleSearch} />
         </div>

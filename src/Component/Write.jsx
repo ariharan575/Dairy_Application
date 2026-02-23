@@ -28,17 +28,18 @@ export default function WriteDiary() {
   const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  useEffect(() => {
-    if (diaryId) loadDiary();
-  }, [diaryId]);
-
-const loadDiary = async () => {
+    useEffect(() => {
+      if (diaryId) loadDiary();
+    }, [diaryId]);
   
-  const res = await fetchDiaryById(diaryId, status);
-  setTitle(res.data.title);
-  setContent(res.data.content);
-  setIsEdit(true);
-};
+  const loadDiary = async () => {
+    setLoading(true);
+    
+    const res = await fetchDiaryById(diaryId, status);
+    setTitle(res.data.title);
+    setContent(res.data.content);
+    setIsEdit(true);
+  };
 
 
   const saveDiary = async () => {
