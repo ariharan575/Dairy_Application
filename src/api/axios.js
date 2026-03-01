@@ -18,7 +18,6 @@ const token = localStorage.getItem("accessToken");
   async error => {
     const originalRequest = error.config;
 
-    // ✅ FIRST handle 401
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -41,7 +40,6 @@ const token = localStorage.getItem("accessToken");
       }
     }
 
-    // ✅ THEN normalize error
     if (error.response?.data) {
       return Promise.reject({
         status: error.response.status,

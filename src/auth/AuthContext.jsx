@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = sessionStorage.getItem("accessToken");
+      const token = localStorage.getItem("accessToken");
 
       if (token) {
         setIsAuthenticated(true);

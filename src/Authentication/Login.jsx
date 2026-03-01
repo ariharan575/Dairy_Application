@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
 
   const navigate = useNavigate();
-  const { login, register } = useAuth();
-
-  const [isLogin,setIsLogin] = useState(false);
-
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(""); 
 
@@ -108,7 +105,8 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 rounded-pill text-white font-semibold bg-cyan-500 shadow-md hover:bg-cyan-600 transition disabled:opacity-60"
+              className="w-full py-2 rounded-pill text-white font-semibold 
+              bg-cyan-500 shadow-md hover:bg-cyan-600 transition disabled:opacity-60"
             >
               {loading ? "Please wait..." : "Login"}
             </button>
@@ -126,7 +124,8 @@ export default function Login() {
               </button>
             </>
           </div>
-           <button className="text-cyan-600 font-semibold ps-2" onClick={()=> navigate("/forget-password")}>Forget Password</button>
+           <button className="text-cyan-600 font-semibold ps-2"
+            onClick={()=> navigate("/forget-password")}>Forget Password</button>
 
         </div>
       </div>

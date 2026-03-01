@@ -94,7 +94,8 @@ export default function ForgetPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2  rounded-pill text-white font-semibold bg-cyan-500 hover:bg-cyan-600 transition disabled:opacity-60"
+            className="w-full py-2  rounded-pill text-white font-semibold bg-cyan-500
+             hover:bg-cyan-600 transition disabled:opacity-60"
           >
             {loading ? "Sending OTP..." : "Send OTP"}
           </button>
