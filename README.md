@@ -1,16 +1,113 @@
-# React + Vite
+# 📔 My Diary Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Secure Diary Management Client Application
 
-Currently, two official plugins are available:
+My Diary Frontend is a modern React-based single page application that provides a secure and responsive interface for managing encrypted diary entries.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React.js
+- React Router
+- Axios
+- Bootstrap
+- Vite
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🏗️ Frontend Architecture
+
+Pages  
+↓  
+Reusable Components  
+↓  
+Service Layer (API Calls)  
+↓  
+Authentication Context  
+↓  
+Backend APIs  
+
+Component-based scalable architecture is used for maintainability.
+
+---
+
+## 🔐 Security Features
+
+- JWT Authentication Handling
+- Protected Routes
+- Token Refresh Handling
+- Axios Interceptors
+- Secure API Communication
+- Centralized Error Handling
+
+---
+
+## ✨ Application Features
+
+### User Features
+
+- Secure Login & Registration
+- OTP Verification
+- Create Diary Entries
+- Update & Delete Diaries
+- Archive & Restore
+- Trash Management
+- Folder Organization
+- Search Functionality
+- Responsive Design
+
+---
+
+## ⚡ UX Enhancements
+
+- Loading Spinner During API Calls
+- Confirmation Dialogs
+- Centralized 3-dot Action Menu
+- Error Handling UI
+- Smooth Navigation
+
+---
+
+## 🌐 API Integration
+
+Frontend communicates securely with backend REST APIs using Axios.
+
+Best Practices:
+- Environment-based API URLs
+- Token Interceptor Pattern
+- Session Expiration Handling
+
+---
+
+## 🚀 Deployment
+
+Frontend Deployment Supported On:
+- Netlify
+- Vercel
+
+Production build optimized using Vite.
+
+---
+
+## 🛡️ Security Recommendations
+
+- Content Security Policy (CSP)
+- XSS Protection
+- HTTPS Hosting
+- Secure Cookie Strategy (Future)
+
+---
+
+## 📈 Future Enhancements
+
+- Dark Mode
+- Progressive Web App
+- Mobile Application
+- End-to-End Encryption
+
+---
+
+## 👨‍💻 Author
+
+Ari Haran
