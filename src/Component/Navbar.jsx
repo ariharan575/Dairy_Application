@@ -34,7 +34,6 @@ export default function Navbar() {
     { id: 7, name: "Trash", navigate: "/trash-diary", icon: <Trash size={16} /> },
   ];
 
-  // Close dropdown outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
