@@ -7,10 +7,11 @@ import {
 } from "../Animation/aleart"
 import {
   createDiaryApi,
-  createDiaryInFolderApi,
   fetchDiaryById,
   updateDiaryApi,
 } from "../api/diaryApi";
+
+import {createDiaryInsideFolder} from "../api/folderApi"
 
 export default function WriteDiary() {
   const location = useLocation();
@@ -63,7 +64,7 @@ export default function WriteDiary() {
       } else {
         if (folderId && folderName) {
           //  FOLDER DIARY
-          await createDiaryInFolderApi({
+          await createDiaryInsideFolder({
             title,
             content,
             folderId,
