@@ -4,81 +4,68 @@ import api from "../api/axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const [loading, setLoading] = useState(true);
 
-
   const register = async (data) => {
-    await api.post("/api/auth/register", data);
-    sessionStorage.setItem("otpEmail", data.email);
-    sessionStorage.setItem("otpUsage", "REGISTER");
-    sessionStorage.setItem("firstName", data.username);
+    const res = await api.post("/api/auth/register", data);
+    return res.data;
   };
-
-  const forgetPasswordApi = (email) => {
-    return api.post("/api/auth/forget-password", { email });
-  };
-
-  const verifyOtpApi = (data) => {
-    return api.post("/api/auth/verify", data);
-  };
-
-  const resetPasswordApi = (data) => {
-    return api.post("/api/auth/reset-password", data);
-  };
-
 
   const login = async (data) => {
     const res = await api.post("/api/auth/login", data);
-
     localStorage.setItem("accessToken", res.data.accessToken);
-
     setIsAuthenticated(true);
-
     await fetchProfile();
+    return res.data;
   };
-
 
   const fetchProfile = async () => {
-    const res = await api.get("/api/user/profile");
-    localStorage.setItem("firstName", res.data.username);
+    try {
+      const res = await api.get("/api/user/profile");
+      localStorage.setItem("firstName", res.data.username);
+    } catch (error) {
+      console.error("Failed to fetch profile");
+    }
   };
-
 
   const logout = async () => {
     try {
       await api.post("/api/auth/logout");
+    } catch (error) {
+      console.error("Logout error", error);
     } finally {
-   localStorage.removeItem("accessToken"); 
-   sessionStorage.clear(); 
-
-
+      localStorage.removeItem("accessToken");
+      sessionStorage.clear();
       setIsAuthenticated(false);
-
       window.location.href = "/login";
     }
   };
 
-  // ====================================================
-
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("accessToken");
-
-      if (token) {
-        setIsAuthenticated(true);
+      
+      if (!token) {
+        setIsAuthenticated(false);
         setLoading(false);
         return;
       }
 
       try {
         const res = await api.post("/api/auth/refresh");
-        localStorage.setItem("accessToken", res.data.accessToken);
-        setIsAuthenticated(true);
+        if (res.data?.accessToken) {
+          localStorage.setItem("accessToken", res.data.accessToken);
+          setIsAuthenticated(true);
+          await fetchProfile();
+        } else {
+          setIsAuthenticated(false);
+          localStorage.removeItem("accessToken");
+        }
       } catch (error) {
+        console.error("Token refresh failed", error);
         setIsAuthenticated(false);
+        localStorage.removeItem("accessToken");
       } finally {
         setLoading(false);
       }
@@ -87,20 +74,14 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  // ====================================================
-
-
   return (
     <AuthContext.Provider
       value={{
         login,
         logout,
         register,
-        forgetPasswordApi,
-        verifyOtpApi,
-        resetPasswordApi,
-        isAuthenticated, 
-        loading     
+        isAuthenticated,
+        loading
       }}
     >
       {children}
